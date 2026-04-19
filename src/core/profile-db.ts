@@ -147,7 +147,7 @@ export function calculateDurationMonths(startDate: string, endDate: string): num
 
   const months = (end.getFullYear() - start.getFullYear()) * 12
     + (end.getMonth() - start.getMonth())
-  return Math.max(1, months)
+  return Math.max(1, months + 1)
 }
 
 /**
