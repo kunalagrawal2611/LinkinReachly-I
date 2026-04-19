@@ -204,3 +204,75 @@ describe('rankJobsByFit', () => {
     expect(ranked[0].heuristicScore).toHaveProperty('dimensions')
   })
 })
+
+describe('seniority level extraction edge cases', () => {
+  const seniorProfile = makeProfile({
+    entries: [
+      {
+        id: 'e1',
+        type: 'experience',
+        role: 'Senior Software Engineer',
+        company: 'BigCorp',
+        location: 'NYC',
+        startDate: 'Jan 2022',
+        endDate: 'Present',
+        durationMonths: 24,
+        skills: ['TypeScript', 'React', 'Node'],
+        metrics: [],
+        domain: ['enterprise'],
+        experienceType: 'engineer',
+        bullets: ['Built distributed systems'],
+        recencyWeight: 1.0
+      }
+    ]
+  })
+
+  it('scores intern jobs with a larger seniority penalty than mid-level jobs for a senior candidate', () => {
+    const internJob = makeJob({
+      title: 'Software Engineering Intern',
+      description: 'Summer internship for college students.'
+    })
+    const midJob = makeJob({
+      title: 'Data Analyst',
+      description: 'Mid-level analytics role.'
+    })
+
+    const internScore = scoreJobFitHeuristic(seniorProfile, internJob)
+    const midScore = scoreJobFitHeuristic(seniorProfile, midJob)
+
+    expect(internScore.dimensions.seniorityFit).toBeLessThan(midScore.dimensions.seniorityFit)
+  })
+
+  it('scores junior jobs lower than senior-level jobs on seniority fit', () => {
+    const juniorJob = makeJob({
+      title: 'Junior Software Engineer',
+      description: 'Entry-level engineering role.'
+    })
+    const seniorJob = makeJob({
+      title: 'Senior Software Engineer',
+      description: 'Senior IC engineering role.'
+    })
+
+    const juniorScore = scoreJobFitHeuristic(seniorProfile, juniorJob)
+    const seniorScore = scoreJobFitHeuristic(seniorProfile, seniorJob)
+
+    expect(seniorScore.dimensions.seniorityFit).toBeGreaterThan(juniorScore.dimensions.seniorityFit)
+  })
+
+  it('defaults to mid-level seniority for titles with no seniority keywords', () => {
+    const unknownJob = makeJob({
+      title: 'Widget Specialist',
+      description: 'Niche role with no standard seniority keyword.'
+    })
+    const analystJob = makeJob({
+      title: 'Data Analyst',
+      description: 'Standard analyst role.'
+    })
+
+    const unknownScore = scoreJobFitHeuristic(seniorProfile, unknownJob)
+    const analystScore = scoreJobFitHeuristic(seniorProfile, analystJob)
+
+    expect(unknownScore.dimensions.seniorityFit).toBe(analystScore.dimensions.seniorityFit)
+  })
+})
+
