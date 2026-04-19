@@ -190,7 +190,7 @@ export function buildEasyApplyProfileFieldMap(profile: ApplicantProfile): Record
   const edu = profile.background.educationSummary || ''
   if (edu.trim()) {
     const hasMBA = /mba/i.test(edu)
-    const hasMasters = hasMBA || /master|mph|bms\b|m\.s\./i.test(edu)
+    const hasMasters = hasMBA || /master|mph|\bms\b|m\.s\./i.test(edu)
     const hasBachelors = hasMasters || /bachelor|bsc|b\.s\.|b\.a\./i.test(edu)
     const hasHighSchool = hasBachelors // if you have a bachelor's, you completed HS
     const degreeLevel = hasMasters ? "Master's Degree" : hasBachelors ? "Bachelor's Degree" : "High School"
