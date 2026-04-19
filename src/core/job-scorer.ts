@@ -83,13 +83,13 @@ const SENIORITY_LEVELS: Array<{ patterns: RegExp[]; level: number }> = [
 // ── Helper functions ──────────────────────────────────────────────────────
 
 function extractSeniorityLevel(title: string): number {
-  let best = 3 // default mid-level
+  let best = -1 // default mid-level
   for (const { patterns, level } of SENIORITY_LEVELS) {
     if (patterns.some(p => p.test(title))) {
       best = Math.max(best, level)
     }
   }
-  return best
+  return best >=0 ? best : 3 //default mid-level when nothing matches
 }
 
 function extractExperienceTypes(title: string): string[] {
