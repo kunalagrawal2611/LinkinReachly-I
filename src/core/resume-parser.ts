@@ -512,16 +512,33 @@ export function classifyExperienceType(role: string): string {
 
 /** Known section names to detect in raw resume text. */
 const SECTION_NAMES: Record<string, string> = {
+  // Experience 
   experience: 'Experience',
+  workexperience: 'Experience',
+  professionalexperience: 'Experience',
+  employmenthistory: 'Experience',
+  employment: 'Experience',
+  workhistory: 'Experience',
+
+  // Education
   education: 'Education',
+  academicbackground: 'Education',
+  educationhistory: 'Education',
+
+  // Additional 
   additional: 'Additional',
   skills: 'Skills',
+  techskills: 'Skills',
+  technicalskills: 'Skills',
+  corecompetencies: 'Skills',
   certifications: 'Certifications',
   projects: 'Projects',
+  personalprojects: 'Projects',
   publications: 'Publications',
   awards: 'Awards',
   languages: 'Languages',
   volunteer: 'Volunteer',
+  volunteering: 'Volunteer',
   interests: 'Interests',
   summary: 'Summary',
   professional: 'Professional',
