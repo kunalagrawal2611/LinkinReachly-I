@@ -191,4 +191,21 @@ linkedin.com/in/janedoe
     expect(profile.email).toBe('jane@example.com')
     expect(profile.linkedinUrl).toContain('linkedin.com/in/janedoe')
   })
+
+    it('parses alternative headers like "Work Experience"', () => {
+    const altText = \`John Smith
+john.smith@gmail.com
+
+---
+
+## Work Experience
+
+**Acme Corp** — Software Company
+*Senior Engineer* | Jan 2020 – Present
+
+- Built distributed systems\`
+    const profile = parseResumeMarkdown(altText)
+    expect(profile.entries).toHaveLength(1)
+    expect(profile.totalYearsExperience).toBeGreaterThan(0)
+  })
 })
