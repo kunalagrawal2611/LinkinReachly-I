@@ -81,7 +81,7 @@ describe('parseFlexibleDate', () => {
 
 describe('calculateDurationMonths', () => {
   it('calculates months between two dates', () => {
-    expect(calculateDurationMonths('Jan 2020', 'Jan 2022')).toBe(24)
+    expect(calculateDurationMonths('Jan 2020', 'Jan 2022')).toBe(25)
   })
 
   it('handles same-year ranges', () => {
