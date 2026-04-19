@@ -218,4 +218,24 @@ describe('buildEasyApplyProfileFieldMap', () => {
     expect(byIndex[1]).toBe('MBA')
     expect(byIndex[2]).toBe('')
   })
+
+  
+  it('classifies MS degree as Master\'s Degree, not Bachelor\'s', () => {
+    const m = buildEasyApplyProfileFieldMap(
+      makeProfile({
+        background: { educationSummary: 'MS Computer Science, Stanford, 2022' }
+      })
+    )
+    expect(m['Highest level of education']).toBe("Master's Degree")
+    expect(m["Master's Degree"]).toBe('Yes')
+  })
+
+  it('does not falsely detect Master\'s from words ending in "ms"', () => {
+    const m = buildEasyApplyProfileFieldMap(
+      makeProfile({
+        background: { educationSummary: 'BS Information Systems, NYU, 2020' }
+      })
+    )
+    expect(m["Master's Degree"]).toBeUndefined()
+  })
 })
