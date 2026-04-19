@@ -203,7 +203,7 @@ john.smith@gmail.com
 **Acme Corp** — Software Company
 *Senior Engineer* | Jan 2020 – Present
 
-- Built distributed systems\`
+- Built distributed systems\ `
     const profile = parseResumeMarkdown(altText)
     expect(profile.entries).toHaveLength(1)
     expect(profile.totalYearsExperience).toBeGreaterThan(0)
